@@ -8,10 +8,14 @@ provider "google" {
   zone    = var.zone
 }
 
+resource "google_compute_address" "static" {
+  name = "ipv4-address"
+}
+
 resource "google_compute_instance" "vm_instance" {
   name         = "terraform-instance-${count.index}"
   machine_type = var.machine_types[var.environment]
-  tags         = ["web", "dev"]
+  tags         = ["web", "dev", "http-server", "https-server"]
   count        = var.instance_count
 
   // Installing flask on all instances
@@ -19,12 +23,13 @@ resource "google_compute_instance" "vm_instance" {
 
   boot_disk {
     initialize_params {
-      image = "debian-cloud/debian-9"
+      image = "ubuntu-1804-lts"
     }
   }
 
   network_interface {
     network = "default"
+
     access_config {
     }
   }
