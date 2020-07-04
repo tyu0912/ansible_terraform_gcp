@@ -7,18 +7,32 @@ provider "google" {
   zone    = var.zone
 }
 
-resource "google_compute_address" "static" {
-  name = "ipv4-address"
+resource "google_compute_network" "flask_network" {
+  name = "flask-app-network"
+}
+
+resource "google_compute_firewall" "allow_ssh_http_https" {
+  name    = "flask-app-firewall"
+  network = google_compute_network.flask_network.name
+
+  allow {
+    protocol = "tcp"
+    ports    = ["80", "443", "22"]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+
+  source_tags = ["flask-tcp"]
 }
 
 resource "google_compute_instance" "vm_instance" {
   name         = "terraform-instance-${count.index}"
   machine_type = var.machine_types[var.environment]
-  tags         = ["web", "dev", "http-server", "https-server"]
+  tags         = ["flask-tcp"]
   count        = var.instance_count
 
   // Installing flask on all instances
-  metadata_startup_script = "sudo apt-get update; sudo apt-get install -yq build-essential python-pip rsync; pip install flask"
+  metadata_startup_script = "sudo apt-get update; sudo apt-get install -yq build-essential python-pip rsync"
 
   boot_disk {
     initialize_params {
@@ -27,19 +41,15 @@ resource "google_compute_instance" "vm_instance" {
   }
 
   network_interface {
-    network = "default"
+    network = google_compute_network.flask_network.name
 
     access_config {
     }
   }
 
   metadata = {
-    ssh-keys = "tennisonyu:${file("~/.ssh/id_rsa.pub")}"
+    ssh-keys = "${var.username}:${file(var.public_key)}"
  }
-}
-
-resource "google_compute_address" "vm_static_ip" {
-  name = "terraform-static-ip"
 }
 
 resource "google_compute_instance_group" "webservers" {
@@ -53,5 +63,4 @@ resource "google_compute_instance_group" "webservers" {
     name = "http"
     port = "80"
   }
-
 }

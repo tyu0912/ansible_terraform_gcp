@@ -43,3 +43,13 @@ variable "service_port_name" {
   type = string
   default = "http"
 }
+
+variable "username" {
+    type = string
+    default = "tennisonyu"
+}
+
+variable public_key {
+    type = string
+    default = "~/.ssh/id_rsa.pub"
+}

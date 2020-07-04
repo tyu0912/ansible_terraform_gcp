@@ -1,8 +1,0 @@
-terraform-instance: 35.247.34.129
-terraform-instance: 35.247.21.104
-terraform-instance: 35.247.21.104
-terraform-instance: 35.247.34.129
-terraform-instance: 35.247.21.104
-terraform-instance: 35.247.34.129
-terraform-instance: 34.82.151.44
-terraform-instance-0: 34.82.151.44
