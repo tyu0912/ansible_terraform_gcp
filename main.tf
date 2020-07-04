@@ -43,12 +43,20 @@ resource "google_compute_address" "vm_static_ip" {
   name = "terraform-static-ip"
 }
 
-resource "google_compute_firewall" "default" {
- name    = "flask-app-firewall"
- network = "default"
+resource "google_compute_instance_group" "webservers" {
+  name        = "terraform-webservers"
+  description = "Terraform test instance group"
+  zone = var.zone
 
- allow {
-   protocol = "tcp"
-   ports    = ["5000"]
- }
+  instances = google_compute_instance.vm_instance[*].self_link
+
+  named_port {
+    name = "http"
+    port = "8080"
+  }
+
+  named_port {
+    name = "https"
+    port = "8443"
+  }
 }

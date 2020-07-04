@@ -2,7 +2,8 @@ variable "project" {
     type = string
 }
 
-variable "credentials_file" { }
+variable "credentials_file" {
+}
 
 variable "region" {
     default = "us-west1"
