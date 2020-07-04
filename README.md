@@ -14,9 +14,13 @@
 ## Resources Used:
 1. https://learn.hashicorp.com/terraform/gcp/build
 2. https://cloud.google.com/community/tutorials/getting-started-on-gcp-with-terraform
+3. https://www.youtube.com/watch?v=Wjp7O1zO-Ag
 
 --- 
 
 ## Ansible Side
 
 1. brew install ansible
+
+## Resources Used:
+1. https://github.com/do-community/ansible-playbooks/tree/master/docker_ubuntu1804

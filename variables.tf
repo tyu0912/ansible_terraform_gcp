@@ -34,3 +34,12 @@ variable "machine_types" {
 variable "instance_count" {
   default = "2"
 }
+
+variable "service_port" {
+  default = 80
+}
+
+variable "service_port_name" {
+  type = string
+  default = "http"
+}

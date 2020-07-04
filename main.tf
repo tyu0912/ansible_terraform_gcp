@@ -1,5 +1,4 @@
 provider "google" {
-  version = "3.5.0"
 
   credentials = file(var.credentials_file)
 
@@ -52,11 +51,7 @@ resource "google_compute_instance_group" "webservers" {
 
   named_port {
     name = "http"
-    port = "8080"
+    port = "80"
   }
 
-  named_port {
-    name = "https"
-    port = "8443"
-  }
 }
