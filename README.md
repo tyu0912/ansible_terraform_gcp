@@ -1,3 +1,5 @@
+This is for the DEXTERITY interview. Also see: flask_app repo.
+
 # Spinning up an austoscaling platform with Terraform and Ansible on GCP
 
 ## Steps:
